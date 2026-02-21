@@ -2,6 +2,7 @@
 import React from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
 import Table from '@tiptap/extension-table'
@@ -53,6 +54,11 @@ function Editor() {
         }
     },
     extensions: [StarterKit,
+        Link.configure({
+            openOnClick: false,
+            autolink: true,
+            defaultProtocol: 'https'
+        }),
         Color, 
         Highlight.configure({ multicolor: true }),
         TextStyle,
