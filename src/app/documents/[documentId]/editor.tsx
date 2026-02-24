@@ -12,10 +12,13 @@ import TableCell from '@tiptap/extension-table-cell'
 import Image from '@tiptap/extension-image'
 import ImageResize from 'tiptap-extension-resize-image'
 import Underline from '@tiptap/extension-underline'
-import TextStyle from '@tiptap/extension-text-style';
-import FontFamily from '@tiptap/extension-font-family';
+import TextStyle from '@tiptap/extension-text-style'
+import FontFamily from '@tiptap/extension-font-family' 
 import {Color} from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
+import TextAlign from '@tiptap/extension-text-align'
+import { FontSizeExtension } from '@/extensions/font-size'
+
 import { useEditorStore } from '@/store/use-editor-store'
 
 
@@ -61,7 +64,11 @@ function Editor() {
         }),
         Color, 
         Highlight.configure({ multicolor: true }),
+        TextAlign.configure({
+        types: ['heading', 'paragraph'],
+        }),
         TextStyle,
+        FontSizeExtension,
         FontFamily,
         Underline,
         Table,
