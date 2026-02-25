@@ -18,6 +18,7 @@ import {Color} from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align'
 import { FontSizeExtension } from '@/extensions/font-size'
+import { LineHeightExtension } from '@/extensions/line-height'
 
 import { useEditorStore } from '@/store/use-editor-store'
 
@@ -66,6 +67,10 @@ function Editor() {
         Highlight.configure({ multicolor: true }),
         TextAlign.configure({
         types: ['heading', 'paragraph'],
+        }),
+        LineHeightExtension.configure({
+        types: ['paragraph', 'heading'],
+        defaultLineHeight: 'normal',
         }),
         TextStyle,
         FontSizeExtension,

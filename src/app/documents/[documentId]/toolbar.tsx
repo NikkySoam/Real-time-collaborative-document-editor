@@ -30,14 +30,51 @@ import { BoldIcon,
       ListIcon,
       ListOrderedIcon,
       MinusIcon,
-      PlusIcon} from "lucide-react";
+      PlusIcon,
+      ListCollapseIcon} from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { set } from "date-fns";
-import { is } from "date-fns/locale";
+
+
+const LineHeightButton = ()=>{
+    const {editor} = useEditorStore();
+    const lineHeights = [
+        {label:'Default', value:'normal'},
+        {label:'Single', value:'1'},
+        {label:'1.15',value:'1.15'},
+        {label:'1.5', value:'1.5'},
+        {label:'Double', value:'2'},
+    ];
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <button
+                className="h-10 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+                 <ListCollapseIcon className="size-4"/> 
+                 <span className="text-[8px]">Line Height</span>
+                </button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="p-0 flex flex-col gap-y-1">
+                {lineHeights.map(({label,value})=>(
+                    <button key={value}
+                     onClick={()=>editor?.chain().focus().setLineHeight(value).run()}
+                     className={cn('flex item-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+                        editor?.getAttributes("paragraph").lineHeight===value && 'bg-neutral-200/80'
+                     )}
+                    >
+                
+                        <span className="text-sm">{label}</span>
+                    </button>
+                ))}
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
 
 
 const FontSizeButton = ()=>{
@@ -88,6 +125,8 @@ const decrement = ()=>{
 }
 
     return (
+        <div className="flex flex-col items-center">
+            
       <div className="flex gap-x-0.5 items-center">
         <button 
         onClick={decrement}
@@ -102,7 +141,7 @@ const decrement = ()=>{
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onKeyDown={handleKeyDown}
-            className="h-7 w-10 text-sm text-center border border-neutral-400 bg-transparent rounded-sm focus:outline-none focus:ring-0"
+            className="h-6 w-10 text-sm text-center border border-neutral-400 bg-transparent rounded-sm focus:outline-none focus:ring-0"
             />
         ) :
         (
@@ -111,12 +150,11 @@ const decrement = ()=>{
                     setIsEditing(true);
                     setFontSize(currentFontSize);
                 }}
-                className="h-7 w-10 text-sm text-center border border-neutral-400 hover:bg-neutral-200 rounded-sm focus:outline-none focus:ring-0 cursor-text"
+                className="h-6 w-10 text-sm text-center border border-neutral-400 hover:bg-neutral-200 rounded-sm focus:outline-none focus:ring-0 cursor-text"
             >
                 {currentFontSize}
             </button>
         )
-
         }
 
         <button 
@@ -124,6 +162,8 @@ const decrement = ()=>{
         onClick={increment}>
             <PlusIcon className="size-4"/>
         </button>
+        </div>
+        <span className="text-[8px]">Font size</span>
         </div>
     )
 }
@@ -553,13 +593,13 @@ export const Toolbar = () =>{
                 isActive:false //late add functionality
             },
             {
-                label: 'List Todo',
+                label: 'List',
                 icon: ListTodoIcon,
                 isActive: editor?.isActive('taskList'),
                 onClick:()=> editor?.chain().focus().toggleTaskList().run(),
             },
             {
-                label: 'Remove Formatting',
+                label: 'Formatting',
                 icon: RemoveFormattingIcon,
                 onClick:()=> editor?.chain().focus().unsetAllMarks().clearNodes().run(),
             }
@@ -574,13 +614,13 @@ export const Toolbar = () =>{
                 <ToolbarButton key={item.label} {...item}/>
                 ))
             }
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
                 <FontFamilyButton />
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
                 <HeadingLevelButton />
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
              <FontSizeButton/>
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
              {
                 sections[1].map((item)=>(
                 <ToolbarButton key={item.label} {...item}/>
@@ -588,19 +628,22 @@ export const Toolbar = () =>{
              }
              <TextColorButton />
              <HighlightColorButton />
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
              <LinkButton/>
              <ImageButton/>
              <AlignButton/>
-             {/* lineheight */}
+             <LineHeightButton/>
              <ListButton/>
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
              {
                 sections[2].map((item)=>(
+                <div key={item.label} className="flex flex-col items-center">
                 <ToolbarButton key={item.label} {...item}/>
+                <span className="text-[8px]">{item.label}</span>
+                </div>
                 ))
              }
-             <Separator orientation="vertical" className="h-6 bg-neutral-300"/>
+             <Separator orientation="vertical" className="h-10 mx-1.5 bg-neutral-300"/>
 
         </div>
     )
