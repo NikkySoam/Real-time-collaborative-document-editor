@@ -345,7 +345,7 @@ const LinkButton = ()=>{
             <DropdownMenuTrigger asChild>
                 <button className="h-10 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
                     <Link2Icon className="size-4" /> 
-                    <span className="text-[8px]">Lists</span>   
+                    <span className="text-[8px]">Link</span>   
                 </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="p-2.5 flex gap-x-2">
