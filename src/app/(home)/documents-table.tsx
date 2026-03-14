@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table';
 import { LoaderIcon } from "lucide-react";
 import { DocumentRow } from "./document-row";
+import { Button } from "@/components/ui/button";
 
 interface documentTableProps{
     documents: Doc<"documents">[] | undefined;
@@ -54,6 +55,16 @@ export const DocumentTable = ({documents,loadMore,status}: documentTableProps)=>
                     )}
                 </Table>
             )}
+            <div className="flex items-center justify-center">
+                <Button
+                variant="ghost"
+                size="sm"
+                disabled={status !== "CanLoadMore"}
+                onClick={()=>loadMore(5)}
+                >
+                {status==="CanLoadMore" ? "Load more" : "End of results"}
+                </Button>
+            </div>
         </div>
     )
 }

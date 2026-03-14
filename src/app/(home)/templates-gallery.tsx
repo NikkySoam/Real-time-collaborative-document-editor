@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { 
@@ -23,8 +24,10 @@ export const TemplatesGallery = ()=>{
     const onTemplateClick=(title:string,initialContent:string)=>{
         setIsCreating(true);
         create({title,initialContent})
+        .catch(()=> toast.error("Something went wrong"))
         .then((documentid)=>{
             router.push(`documents/${documentid}`);
+            toast.success("Document created");
         })
         .finally(()=>{
             setIsCreating(false);
