@@ -589,8 +589,8 @@ export const Toolbar = () =>{
             {
                 label: 'Comment',
                 icon: MessageSquarePlusIcon,
-                onClick:()=> console.log('comment'),
-                isActive:false //late add functionality
+                onClick:()=> editor?.chain().focus().addPendingComment().run(),
+                isActive: editor?.isActive('liveblocksCommentMark')
             },
             {
                 label: 'List',

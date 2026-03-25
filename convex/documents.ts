@@ -1,4 +1,5 @@
-import { query,mutation } from "./_generated/server";
+
+import { query, mutation } from "./_generated/server";
 import { ConvexError, v } from 'convex/values'
 import { paginationOptsValidator } from "convex/server";
 
@@ -29,7 +30,7 @@ export const create = mutation({
 
 export const get = query({
   args: {paginationOpts : paginationOptsValidator, search: v.optional(v.string())},
-  handler: async (ctx,{search, paginationOpts}) => {
+  handler: async (ctx, {search, paginationOpts}) => {
     const user = await ctx.auth.getUserIdentity();
 
     if(!user){
