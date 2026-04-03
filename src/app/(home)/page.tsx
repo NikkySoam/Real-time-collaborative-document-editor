@@ -7,7 +7,7 @@ import { DocumentTable } from "./documents-table";
 import { useSearchParam } from "@/hooks/use-search-params";
 
 export default function Home() {
-  const [search] = useSearchParam()
+  const [search] = useSearchParam();
   const {results,loadMore,status} = usePaginatedQuery(api.documents.get, {search}, {initialNumItems:5}); //bracket for other args
 
   return (
