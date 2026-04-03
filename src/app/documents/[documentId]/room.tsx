@@ -16,7 +16,7 @@ import { Id } from "../../../../convex/_generated/dataModel";
 
 import { LEFT_MARGIN_DEFAULT,RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
 
-type User = { id: string; name:string; avatar:string};
+type User = { id: string; name:string; avatar:string; color: string};
 
 export function Room({ children }: { children: ReactNode }) {
     const params = useParams();
@@ -27,13 +27,20 @@ export function Room({ children }: { children: ReactNode }) {
       ()=> async() =>{
         try {
           const list = await getUsers();
-          setUsers(list);
+          const usersWithColor: User[] = list.map((user) => {
+            const nameToNumber = user.name.split("").reduce((acc, char)=> acc + char.charCodeAt(0),0);
+            const hue = Math.abs(nameToNumber) % 360;
+            const color = `hsl(${hue}, 80%, 60%)`;
+            return { ...user, color };
+          });
+          setUsers(usersWithColor);
         } catch (error) {
           toast.error("Failed to fetch users");
         }
       },
       [],
     )
+
 
     useEffect(()=>{
       fetchUsers();
@@ -77,6 +84,7 @@ resolveRoomsInfo={async({roomIds})=>{
     id:document.id,
     name: document.name,
   }))
+ 
 }}
     >
       <RoomProvider

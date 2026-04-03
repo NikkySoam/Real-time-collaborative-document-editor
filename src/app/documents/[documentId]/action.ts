@@ -16,14 +16,18 @@ export async function getUsers(){
     const {sessionClaims} = await auth();
     const clerk = await clerkClient();
 
+    const orgId = (sessionClaims as { o?: { id: string } })?.o?.id;
+  
     const response = await clerk.users.getUserList({
-        organizationId: [(sessionClaims?.o as any)?.id],
+        organizationId: orgId ? [orgId] : [],
     })
+
 
     const users = response.data.map((user)=>({
         id:user.id,
         name: user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Anonymous",
         avatar : user.imageUrl 
+        
     }))
 
     return users;

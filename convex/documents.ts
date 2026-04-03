@@ -31,9 +31,11 @@ export const create = mutation({
       throw new ConvexError("Unauthorized");
     }
 
-    const organizationId = (user.organization_id ?? undefined) as 
-    | string
-    | undefined;
+
+    // const organizationId = (user.organization_id ?? undefined) as 
+    // | string
+    // | undefined;
+    const organizationId = (((user as { o?: { id: string } })?.o?.id) ?? undefined) as string | undefined;
     
     return await ctx.db.insert("documents",{
       title: args.title ?? "untitled document",
@@ -55,9 +57,10 @@ export const get = query({
       throw new ConvexError("Unauthorized")
     }
 
-    const organizationId = (user.organization_id ?? undefined) as 
-    | string
-    | undefined;
+    // const organizationId = (user.organization_id ?? undefined) as 
+    // | string
+    // | undefined;
+        const organizationId = (((user as { o?: { id: string } })?.o?.id) ?? undefined) as string | undefined;
 
     if(search && organizationId){
       return await ctx.db
