@@ -67,7 +67,6 @@ addCommands(){
                 const {from, to} = selection;
                 state.doc.nodesBetween(from, to ,(node,pos)=>{
                     if(this.options.types.includes(node.type.name)){
-                        const {lineHeight, ...rest} = node.attrs;
                         tr = tr.setNodeMarkup(pos, undefined, {
                             ...node.attrs,
                             lineHeight: this.options.defaultLineHeight,

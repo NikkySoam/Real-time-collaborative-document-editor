@@ -34,7 +34,7 @@ export function Room({ children }: { children: ReactNode }) {
             return { ...user, color };
           });
           setUsers(usersWithColor);
-        } catch (error) {
+        } catch {
           toast.error("Failed to fetch users");
         }
       },
