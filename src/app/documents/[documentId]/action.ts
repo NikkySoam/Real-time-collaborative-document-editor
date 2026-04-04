@@ -15,7 +15,7 @@ export async function getDocuments(ids: Id<"documents">[]){
 export async function getUsers(){
     const {sessionClaims} = await auth();
     const clerk = await clerkClient();
-
+    
     const orgId = (sessionClaims as { o?: { id: string } })?.o?.id;
   
     const response = await clerk.users.getUserList({
