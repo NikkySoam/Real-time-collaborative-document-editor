@@ -1,7 +1,7 @@
 🚀 Real-Time Collaborative Document Editor
 A powerful Google Docs–like collaborative editor that enables multiple users to create, edit, and manage documents in real-time with advanced features for productivity and teamwork.
 
-✨ Features
+**✨ Features**
 📝 Rich Text Editor (formatting, headings, styling)
 🤝 Real-time Collaboration (multi-user editing)
 💬 Comments & Mentions system
@@ -35,7 +35,7 @@ Authentication: Clerk
 git clone https://github.com/NikkySoam/Real-time-google-docs-project
 
 # Navigate to project folder
-cd your-repo-name
+cd Real-time-google-docs-project
 
 # Install dependencies
 npm install
