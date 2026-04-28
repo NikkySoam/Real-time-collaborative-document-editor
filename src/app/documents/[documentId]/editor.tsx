@@ -182,6 +182,7 @@ const [showHistory, setShowHistory] = React.useState(false);
           <VersionHistory
             documentId={documentId}
             onRestore={handleRestore}
+            currentContent={editor?.getHTML() || ""}
           />
         )}
 
