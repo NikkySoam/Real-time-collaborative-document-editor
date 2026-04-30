@@ -52,7 +52,7 @@ function VersionHistory({ documentId, onRestore, currentContent }: Props) {
                 });
 
   return (
-    <div className="fixed left-0 top-18 h-[80vh] w-80 bg-gray-100 shadow-xl rounded-md border-r z-50 flex flex-col">
+    <div className="fixed left-0 top-18 h-[80vh] w-80 bg-gray-100 shadow-xl rounded-md border-r z-50 flex flex-col print:hidden">
       
       
       <div className="p-4 border-b flex items-center justify-between">
@@ -132,7 +132,7 @@ function VersionHistory({ documentId, onRestore, currentContent }: Props) {
 
             <button
                 onClick={() => setPreview(null)}
-                className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100"
+                className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-200"
             >
                 ✕
             </button>
@@ -180,7 +180,7 @@ function VersionHistory({ documentId, onRestore, currentContent }: Props) {
                 <div
                     key={i}
                     className={` p-2 ${
-                    row.changed ? "border-green-300 bg-green-50" : "bg-white"
+                    row.changed ? "border-green-300 bg-green-50" : ""
                     }`}
                 >
                     {row.changed && (

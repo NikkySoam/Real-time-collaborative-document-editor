@@ -154,7 +154,7 @@ const [showHistory, setShowHistory] = React.useState(false);
   return (
     <div className='size-full flex flex-col items-center overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible'>
           {/* version control UI */}
-          <div className="py-1 flex gap-2 ">
+          <div className="py-1 flex gap-2 print:hidden">
             <input
               value={message}
               onChange={(e) => setMessage(e.target.value)}
