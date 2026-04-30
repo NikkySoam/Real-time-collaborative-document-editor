@@ -121,8 +121,8 @@ function Editor({initialContent}: editorProps) {
   })
 
 
-  const params = useParams();
-  const documentId = params.documentId as string;
+  const params = useParams<{ documentId: string }>();
+  const documentId = params.documentId;
   const saveVersion = useMutation(api.versions.saveVersion);
   const [message, setMessage] = React.useState("");
 
@@ -132,7 +132,7 @@ function Editor({initialContent}: editorProps) {
   const content = editor.getHTML(); // snapshot
   try {
     await saveVersion({
-      docId: documentId as any,
+      docId: documentId,
       content,
       message: message || "Manual save",
     });
