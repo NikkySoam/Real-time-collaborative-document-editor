@@ -34,6 +34,7 @@ import { api } from "../../../../convex/_generated/api";
 import { useParams } from "next/navigation";
 
 import VersionHistory from '@/components/version-history';
+import { toast } from 'sonner'
 
 
 
@@ -136,6 +137,7 @@ function Editor({initialContent}: editorProps) {
       content,
       message: message || "Manual save",
     });
+    toast.success('commit successfully')
     setMessage("");
   } catch (err) {
     console.error("Error saving version", err);
@@ -146,6 +148,7 @@ const handleRestore = (content: string) => {
   if (!editor) return;
 
   editor.commands.setContent(content);
+  toast.success('restore successfully')
 };
 
 const [showHistory, setShowHistory] = React.useState(false);
