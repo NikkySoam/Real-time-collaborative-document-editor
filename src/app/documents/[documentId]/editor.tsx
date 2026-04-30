@@ -28,6 +28,14 @@ import { Threads } from './threads'
 import { useStorage } from '@liveblocks/react'
 import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from '@/constants/margins'
 
+// for version control
+import { useMutation } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
+import { useParams } from "next/navigation";
+
+import VersionHistory from '@/components/version-history';
+
+
 
 interface editorProps{
   initialContent?: string | undefined;
@@ -111,8 +119,73 @@ function Editor({initialContent}: editorProps) {
     // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
   })
+
+
+  const params = useParams();
+  const documentId = params.documentId as string;
+  const saveVersion = useMutation(api.versions.saveVersion);
+  const [message, setMessage] = React.useState("");
+
+  const handleSaveVersion = async () => {
+  if (!editor) return;
+
+  const content = editor.getHTML(); // snapshot
+  try {
+    await saveVersion({
+      docId: documentId as any,
+      content,
+      message: message || "Manual save",
+    });
+    setMessage("");
+  } catch (err) {
+    console.error("Error saving version", err);
+  }
+};
+
+const handleRestore = (content: string) => {
+  if (!editor) return;
+
+  editor.commands.setContent(content);
+};
+
+const [showHistory, setShowHistory] = React.useState(false);
+
+
   return (
-    <div className='size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible'>
+    <div className='size-full flex flex-col items-center overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible'>
+          {/* version control UI */}
+          <div className="py-1 flex gap-2 print:hidden">
+            <input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Enter commit message"
+              className="border outline-none px-2 py-1 rounded"
+            />
+           {/* commit button  */}
+          <button
+            onClick={handleSaveVersion}
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          >
+            Commit
+          </button>
+
+          {/* Toggle History Button */}
+          <button
+            onClick={() => setShowHistory((prev) => !prev)}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            {showHistory ? "Hide Commits" : "Show Commits"}
+          </button>
+        </div>
+
+       {showHistory && (
+          <VersionHistory
+            documentId={documentId}
+            onRestore={handleRestore}
+            currentContent={editor?.getHTML() || ""}
+          />
+        )}
+
       <Ruler/>
     <div className='min-w-max flex justify-center w-[816px] py-4 print:py-0 mx-auto print:w-full print:min-w-0'>
       <EditorContent editor={editor} />

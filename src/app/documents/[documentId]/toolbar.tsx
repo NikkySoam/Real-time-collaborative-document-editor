@@ -608,7 +608,7 @@ export const Toolbar = () =>{
         ]
     ]
     return (
-        <div className="bg-[#F1F4F9] px-2.5 py-1 rounded-[24px] flex items-center min-h-[40px] gap-x-0.5 overflow-x-auto ">
+        <div className="bg-[#F1F4F9] px-2.5 py-1 rounded-[24px] flex items-center min-h-[40px] gap-x-0.5 overflow-x-auto no-scrollbar">
             {
                 sections[0].map((item)=>(
                 <ToolbarButton key={item.label} {...item}/>
