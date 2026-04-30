@@ -3,6 +3,7 @@
 import React from 'react';
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
+import { Id } from '../../convex/_generated/dataModel';
 
 
 interface Props {
@@ -23,7 +24,7 @@ function VersionHistory({ documentId, onRestore, currentContent }: Props) {
     };
 
     const versions = useQuery(api.versions.getVersions, {
-        docId: documentId,
+        docId: documentId as Id<"documents">,
     });
 
     if (!versions) {
