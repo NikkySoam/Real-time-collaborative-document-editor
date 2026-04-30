@@ -23,7 +23,7 @@ function VersionHistory({ documentId, onRestore, currentContent }: Props) {
     };
 
     const versions = useQuery(api.versions.getVersions, {
-        docId: documentId as any,
+        docId: documentId,
     });
 
     if (!versions) {
