@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { Id } from '../../../../convex/_generated/dataModel'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
@@ -122,7 +123,7 @@ function Editor({initialContent}: editorProps) {
   })
 
 
-  const params = useParams<{ documentId: string }>();
+  const params = useParams();
   const documentId = params.documentId;
   const saveVersion = useMutation(api.versions.saveVersion);
   const [message, setMessage] = React.useState("");
@@ -131,9 +132,10 @@ function Editor({initialContent}: editorProps) {
   if (!editor) return;
 
   const content = editor.getHTML(); // snapshot
+ 
   try {
     await saveVersion({
-      docId: documentId,
+      docId: documentId as Id<"documents">,
       content,
       message: message || "Manual save",
     });
@@ -183,7 +185,7 @@ const [showHistory, setShowHistory] = React.useState(false);
 
        {showHistory && (
           <VersionHistory
-            documentId={documentId}
+            documentId={documentId as Id<"documents">}
             onRestore={handleRestore}
             currentContent={editor?.getHTML() || ""}
           />
